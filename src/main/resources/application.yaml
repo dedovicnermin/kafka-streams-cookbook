@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: kafka-streams-cookbook
+  cloud:
+    stream:
+      kafka:
+        streams:
+          binder:
+            application-id: cookbook-app
+            brokers: localhost:9092,localhost:9093,localhost:9094
+            configuration:
+              state.cleanup.delay.ms: 300000
+              retry.backoff.ms: 500
+              commit.interval.ms: 2000
+              acceptable.recovery.lag: 10000
+              poll.ms: 5000
+              default:
+                deserialization.exception.handler: LogAndContinueExceptionHandler
+                key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            deserialization-exception-handler: logandcontinue
+#          bindings:
+
+
+
+
