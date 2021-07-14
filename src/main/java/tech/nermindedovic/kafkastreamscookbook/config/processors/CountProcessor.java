@@ -27,7 +27,7 @@ public class CountProcessor {
                 .flatMapValues(value -> Arrays.asList(value.toLowerCase().split("\\W+")))
                 .map((key, value) -> new KeyValue<>(value, value))
                 .groupByKey(Grouped.with(Serdes.String(), Serdes.String()))
-                .windowedBy(TimeWindows.of(Duration.ofSeconds(30)))
+                .windowedBy(TimeWindows.of(Duration.ofSeconds(5)))
                 .count(Materialized.as("wordcounts"))
                 .toStream()
                 .map((k,v) -> new KeyValue<>(k.key(), new WordCount(k.key(), v.intValue(), new Date(k.window().start()), new Date(k.window().end()))))

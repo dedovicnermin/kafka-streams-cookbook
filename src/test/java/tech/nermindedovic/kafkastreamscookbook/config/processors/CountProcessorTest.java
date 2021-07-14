@@ -14,6 +14,7 @@ import org.junit.jupiter.api.TestInstance;
 import tech.nermindedovic.kafkastreamscookbook.config.pojos.WordCount;
 import tech.nermindedovic.kafkastreamscookbook.config.serdes.CustomSerdes;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.Properties;
 
@@ -53,7 +54,7 @@ class CountProcessorTest {
 
 
     @Test
-    void countsWordsAccurately() {
+    void countsWordsAccurately() throws InterruptedException {
         StreamsBuilder builder = new StreamsBuilder();
         KStream<Bytes, String> stream = builder.stream("count-input-topic", Consumed.with(Serdes.Bytes(), stringSerde));
         KStream<String, WordCount> apply = processor.processWords().apply(stream);
