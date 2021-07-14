@@ -60,10 +60,17 @@ class GlobalJoinProcessorTest {
         clickStreamInput.pipeInput("nermin", 33L);
         clickStreamInput.pipeInput("nerm", 34L);
 
-        Map<String, Long> stringLongMap = outputTopic.readKeyValuesToMap();
-        log.info(stringLongMap.toString());
+        Map<String, Long> map = outputTopic.readKeyValuesToMap();
+        log.info(map.toString());
 
-        assertThat(stringLongMap).isNotNull();
+        assertThat(map.get("europe")).isEqualTo(156);
+        assertThat(map.get("usa")).isEqualTo(11 + 15);
+        assertThat(map.get("east-asia")).isEqualTo(21);
+        assertThat(map.get("UNKNOWN")).isEqualTo(34);
+        assertThat(map.get("africa")).isEqualTo(16);
+
+
+
 
 
     }
@@ -90,8 +97,8 @@ class GlobalJoinProcessorTest {
     void populateRegionsTable() {
         List<KeyValue<String, String>> inputs = Arrays.asList(
                 new KeyValue<>("nermin", "europe"),
-                new KeyValue<>("ryan", "west-asia"),
                 new KeyValue<>("jason", "africa"),
+                new KeyValue<>("ryan", "west-asia"),
                 new KeyValue<>("chris", "usa"),
                 new KeyValue<>("vaihbav", "east-asia"),
                 new KeyValue<>("ryan", "usa")
