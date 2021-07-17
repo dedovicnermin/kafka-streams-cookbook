@@ -28,8 +28,8 @@ public class CurryingProcessor {
                 customers -> (
                         products -> (
                                 orders.join(customers,
-                                        (orderId, order) -> order.getCustomerId(),
-                                        (order, customer) -> new CustomerOrder(customer, order))
+                                        (orderId, order) -> order.getCustomerId(),                                  // order contains customerId. Make this the key for joining with customerTable
+                                        (order, customer) -> new CustomerOrder(customer, order))                    // value mapper
                                         .join(products,
                                                 (orderId, customerOrder) -> customerOrder
                                                         .productId(),

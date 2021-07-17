@@ -11,7 +11,6 @@ public class CustomerOrder {
     public Customer customer;
     public Order  order;
 
-
     public long productId () {
         return order.getProductId();
     }
